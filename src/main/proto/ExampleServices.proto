@@ -1,0 +1,61 @@
+syntax = "proto3";
+
+package io.esev.grpc;
+
+option java_multiple_files = true;
+
+//Enums
+enum Sentiment {
+    HAPPY = 0;
+    SLEEPY = 1;
+    ANGRY = 2;
+}
+enum Language {
+    EN = 0;
+    ZH = 1;
+    ES = 2;
+}
+
+//Message Hello
+message HelloRequest{
+    string name = 1;
+    int64 age =2 ;
+    repeated string hobbies = 3;
+    map<string, string> backOfTricks = 4;
+    Sentiment sentiment = 5;
+}
+message HelloResponse {
+    string greeting = 1;
+}
+
+//Message Goodbye
+message GoodbyeRequest {
+    string name = 1;
+    string reason = 2;
+}
+message GoodbyeResponse {
+    string farewell = 1;
+}
+
+//Message Translation
+message TranslationRequest {
+    string message = 1;
+    Language from  = 2;
+    Language to = 3;
+}
+message TranslationResponse {
+    string message = 1;
+}
+
+
+//Service
+service GreetingService {
+    rpc greeting(HelloRequest) returns (HelloResponse);
+    rpc secondGreeting(HelloRequest) returns (HelloResponse);
+}
+service GoodbyeService {
+    rpc goodbye(GoodbyeRequest) returns (GoodbyeResponse);
+}
+service TranslationService {
+    rpc translate(TranslationRequest) returns (TranslationResponse);
+}
